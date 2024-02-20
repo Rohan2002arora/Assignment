@@ -13,11 +13,10 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-//import Button from '@mui/material/Button';
 import { NavLink } from 'react-router-dom';
 
 const drawerWidth = 240;
-const navItems = ['home', 'signup', 'chart','table','entry'];
+const navItems = ['home', 'chart', 'table', 'entry'];
 
 function DrawerAppBar(props) {
   const { window } = props;
@@ -57,6 +56,7 @@ function DrawerAppBar(props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
+            
             sx={{ mr: 2, display: { sm: 'none' } }}
           >
             <MenuIcon />
@@ -68,20 +68,21 @@ function DrawerAppBar(props) {
           >
             MUI
           </Typography>
-          <Box sx={{
-            display: 'flex',
-          
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '10px',
-          }}>
+          <Box
+            sx={{
+              display: { xs: 'none', sm: 'flex' }, // Hide on mobile, show on tablet and larger
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px',
+            }}
+          >
             {navItems.map((item) => (
               <NavLink key={item} to={item} style={{
-                color:"white",
-                textDecoration:"none",
-                textTransform:"capitalize",
+                color: "white",
+                textDecoration: "none",
+                textTransform: "capitalize",
               }}>
-                {item} 
+                {item}
               </NavLink>
             ))}
           </Box>
@@ -104,7 +105,6 @@ function DrawerAppBar(props) {
           {drawer}
         </Drawer>
       </nav>
-
     </Box>
   );
 }
