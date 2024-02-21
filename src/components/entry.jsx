@@ -4,7 +4,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Entry(){
@@ -29,23 +30,54 @@ function Entry(){
         salary:"",
     })
     const handleSubmit = (event) => {
-        event.preventDefault();
-        setUserData((prev) => [...prev, values]);
-        //console.log(userdata);
-       // localStorage.setItem("values",JSON.stringify(values));
-       localStorage.setItem('userdata', JSON.stringify([...userdata, values]));
-        setTimeout(() => {
-            setValues({
-                name:"",
-                job:"",
-                age:"",
-                city:"",
-                salary:"",
-             })
-            
-        }, 1000);
-        
-      };
+      event.preventDefault();
+  
+      // Convert the name to lowercase
+      const lowercaseName = values.name.toLowerCase();
+  
+      // Check if the lowercase name already exists
+      const isNameExists = userdata.some((user) => user.name.toLowerCase() === lowercaseName);
+  
+      if (isNameExists) {
+          // Show toast notification for error
+          toast.error('Name already exists. Please choose a different name.', {
+              position: 'top-center',
+              autoClose: 3000, // Close the notification after 3000 milliseconds (3 seconds)
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+          });
+      } else {
+          // Add data to the state and localStorage
+          setUserData((prev) => [...prev, { ...values, name: lowercaseName }]);
+          localStorage.setItem('userdata', JSON.stringify([...userdata, { ...values, name: lowercaseName }]));
+  
+          // Show toast notification for success
+          toast.success('Data added successfully', {
+              position: 'top-center',
+              autoClose: 2000, // Close the notification after 2000 milliseconds (2 seconds)
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+          });
+  
+          // Clear the form after a delay
+          setTimeout(() => {
+              setValues({
+                  name: '',
+                  job: '',
+                  age: '',
+                  city: '',
+                  salary: '',
+              });
+          }, 1000);
+      }
+  };
+  
       useEffect(() => {
         // This will log the updated userdata when it changes
         console.log(userdata);
@@ -62,6 +94,7 @@ function Entry(){
             backgroundColor: 'rgb(22, 78, 99)'
           }}
         >
+          <ToastContainer />
           <Paper
             elevation={3}
             sx={{

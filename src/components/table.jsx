@@ -53,7 +53,7 @@ function Show() {
                     key={data.name}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
+                    <TableCell component="th" scope="row" style={{textTransform: "capitalize"}}>
                       {data.name}
                     </TableCell>
                     <TableCell align="right">{data.job}</TableCell>
