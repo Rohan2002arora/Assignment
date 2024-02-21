@@ -80,7 +80,7 @@ function DrawerAppBar(props) {
           >
             {navItems.map((item) => (
               <NavLink key={item} to={item} style={{
-                color: "white",
+          
                 textDecoration: "none",
                 textTransform: "capitalize",
                 color: 'black',
