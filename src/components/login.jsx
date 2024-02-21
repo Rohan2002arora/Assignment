@@ -29,6 +29,7 @@ export default function Login() {
     if (enteredUsername === 'demo' && enteredPassword === 'demo') {
       console.log('Login successful');
       navigate('/home');
+      localStorage.setItem("session","demo");
       // Proceed with the actual login logic or redirect to another page
     } else {
       // Display error message to the user

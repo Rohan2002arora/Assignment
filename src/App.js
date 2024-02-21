@@ -4,6 +4,7 @@ import {
   Route,
   Routes,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import DrawerAppBar from "./components/navbar";
 import Entry from "./components/entry";
@@ -17,6 +18,16 @@ function useCurrentRoute() {
   return location.pathname;
 }
 
+function PrivateRoute({ element }) {
+  const isAuthenticated = !!localStorage.getItem("session");
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  return element;
+}
+
 function AppContent() {
   const currentRoute = useCurrentRoute();
   const hideNavbarRoutes = ["/", "/login"]; // Add routes where you want to hide the navbar
@@ -25,11 +36,12 @@ function AppContent() {
     <>
       {!hideNavbarRoutes.includes(currentRoute) && <DrawerAppBar />}
       <Routes>
+        <Route path="/home" element={<PrivateRoute element={<Home />} />} />
+        <Route path="/chart" element={<PrivateRoute element={<Chart />} />} />
+        <Route path="/entry" element={<PrivateRoute element={<Entry />} />} />
+        <Route path="/table" element={<PrivateRoute element={<Show />} />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/chart" element={<Chart />} />
-        <Route path="/entry" element={<Entry />} />
-        <Route path="/table" element={<Show />} />
       </Routes>
     </>
   );

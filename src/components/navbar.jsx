@@ -14,6 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 const navItems = ['home', 'chart', 'table', 'entry'];
@@ -29,13 +30,13 @@ function DrawerAppBar(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+        Visualizer
       </Typography>
       <Divider />
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
+            <ListItemButton component={Link} to={`/${item}`} sx={{ textAlign: 'center', textTransform: "capitalize" }}>
               <ListItemText primary={item} />
             </ListItemButton>
           </ListItem>
@@ -43,13 +44,14 @@ function DrawerAppBar(props) {
       </List>
     </Box>
   );
+  
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar component="nav">
+      <AppBar component="nav" sx={{ backgroundColor: 'white',borderRadius: '12px', marginBottom: '10px',color: 'black', marginTop: '10px' }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -66,7 +68,7 @@ function DrawerAppBar(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            Visualizer
           </Typography>
           <Box
             sx={{
@@ -81,6 +83,7 @@ function DrawerAppBar(props) {
                 color: "white",
                 textDecoration: "none",
                 textTransform: "capitalize",
+                color: 'black',
               }}>
                 {item}
               </NavLink>
@@ -88,7 +91,7 @@ function DrawerAppBar(props) {
           </Box>
         </Toolbar>
       </AppBar>
-      <nav>
+      <nav >
         <Drawer
           container={container}
           variant="temporary"
@@ -100,6 +103,7 @@ function DrawerAppBar(props) {
           sx={{
             display: { xs: 'block', sm: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            
           }}
         >
           {drawer}

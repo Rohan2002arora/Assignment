@@ -8,7 +8,19 @@ import Paper from '@mui/material/Paper';
 
 
 function Entry(){
-    const [userdata,setUserData]= useState(JSON.parse(localStorage.getItem("userdata") || []))
+  const [userdata, setUserData] = useState(() => {
+    const storedData = localStorage.getItem("userdata");
+    if (storedData) {
+      try {
+        return JSON.parse(storedData);
+      } catch (e) {
+        console.error("Parsing error: ", e);
+        // Handle the error as needed, maybe return a default value
+        return []; // or return a default object or whatever your initial state should be
+      }
+    }
+    return []; // This is the default value in case there's nothing in localStorage
+  });
     const [values,setValues]=useState({
         name:"",
         job:"",
@@ -47,6 +59,7 @@ function Entry(){
             alignItems: 'center',
             justifyContent: 'center',
             height: '100vh', 
+            backgroundColor: 'rgb(22, 78, 99)'
           }}
         >
           <Paper
@@ -59,13 +72,12 @@ function Entry(){
               alignItems: 'center',
               width: '60%', // Adjust the width as needed
               borderRadius: 8, // Border radius for glass morphism effect
-              backdropFilter: 'blur(8px)', // Glass morphism effect
-              backgroundColor: 'rgba(255, 255, 255, 0.1)', // Glass morphism effect
+             
               boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Box shadow for glass morphism effect
             }}
           >
             <Typography variant="h5" gutterBottom>
-              User Information
+              Enter User Information
             </Typography>
             <form onSubmit={handleSubmit}>
               <TextField

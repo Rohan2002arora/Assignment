@@ -8,12 +8,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Grid from '@mui/material/Grid';
+import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 function Show() {
-  const data = JSON.parse(localStorage.getItem("userdata") || []);
-
+  const storedData = localStorage.getItem("userdata");
+  const data = storedData ? JSON.parse(storedData) : [];
+ 
   return (
-    <Grid container justifyContent="center" alignItems="center" height="100vh">
+    <Grid container justifyContent="center" alignItems="center" height="100vh" style={{backgroundColor: 'rgb(22, 78, 99)'}}>
       <Grid item xs={12} sm={6} md={8} lg={6}>
         <Paper
           elevation={3}
@@ -24,11 +27,12 @@ function Show() {
             alignItems: 'center',
             width: '100%', // Adjust the width as needed
             borderRadius: 8,
-            backdropFilter: 'blur(8px)',
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            backdropFilter: 'blur(20px)',
+            backgroundColor: 'rgba(255, 255, 255, 0.6)',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
           }}
         >
+          {data?.length ?        (<>
           <Typography variant="h5" gutterBottom>
             User Information
           </Typography>
@@ -61,6 +65,16 @@ function Show() {
               </TableBody>
             </Table>
           </TableContainer>
+          </>):(
+            <>
+              <h1>No Data Found</h1>
+              <Link to="/entry" style={{ textDecoration: 'none' }}>
+                <Button variant="contained" color="primary">
+                  Go to Entry
+                </Button>
+              </Link>
+            </>
+          )}
         </Paper>
       </Grid>
     </Grid>
